@@ -1,7 +1,7 @@
 const fs = require("fs/promises");
 const path = require("path");
 const filePath = path.join(__dirname, "contacts.json");
-const { nanoid } = require("nanoid");
+const shortid = require("shortid");
 
 const listContacts = async () => {
   const result = await fs.readFile(filePath);
@@ -23,7 +23,7 @@ const getContactById = async (contactId) => {
 
 const addContact = async (body) => {
   const allContacts = await listContacts();
-  const newContact = { id: nanoid(), ...body };
+  const newContact = { id: shortid.generate(), ...body };
   allContacts.push(newContact);
   await updateListAllContacts(allContacts);
   if (!newContact) {
